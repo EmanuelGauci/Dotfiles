@@ -1,0 +1,202 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+    // LOGO CONFIG
+    "logo": {
+        "source": "~/.config/fastfetch/CrystalAscii.txt",
+        "height": 1,
+        "width": 1,
+        "padding": {
+            "top": 0,
+            "left": 0
+        },
+        "color": {"1": "#aaaaff"},
+    },
+
+
+
+    // DISPLAY CONFIG
+    "display": {
+        "separator": " ", // Separator between keys and values
+        "constants": [
+            "──────────────────────────────────────────────", // {$1} - thin border horizontal line 
+            "\u001b[47D",                                     // {$2} - left 47 columns
+            "\u001b[47C",                                     // {$3} - right 47 columns
+            "\u001b[46C",                                     // {$4} - right 46 columns
+            "══════════════════════════════════════════════"  // {$5} - thick border horizontal line 
+        ],
+
+
+        "key": {
+            "width": 12, // Aligns keys to this width
+            "type": "string",
+        },
+        "bar": {
+            "width": 10, // Width of percentage bars
+            "char": {
+                "elapsed": "■", // Character for elapsed portion
+                "total": "-", // Character for total portion
+            },
+        },
+        "percent": {
+            "type": 9, // 1=number, 2=bar, 3=both, 9=colored number
+            "color": {
+                "green": "green",
+                "yellow": "light_yellow",
+                "red": "light_red",
+            }
+        }
+    },
+ 
+
+
+
+
+    // MODULE CONFIG
+    "modules": [
+        // NOTE: use `fastfetch -h <module>-format` for available format options
+
+        // HARDWARE
+        {
+            "type": "custom",
+            "key": "╔════════╦{$5}╗\u001b[41D",
+            "format": "{#cyan} Hardware ",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "cpu",
+            "key": "║CPU     ║{$4}║{$2}",
+            "format": "{cores-physical} ({cores-logical}) | {freq-base} ({freq-max})",
+            "keyColor": "#aaaaff"
+        },
+        {
+            "type": "gpu",
+            "key": "║GPU     ║{$4}║{$2}",
+            "format": "{name}",
+            "keyColor": "#aaaaff"
+        },
+        {
+            "type": "memory",
+            "key": "║Ram     ║{$4}║{$2}",
+            "format":"{percentage-bar} {used} {total}",
+            "percent": {"type": 3, "green": 30, "yellow": 70},
+            "keyColor": "#aaaaff"
+        },
+        {
+            "type": "disk",
+            "key": "║Disk    ║{$4}║{$2}",
+            "format": "{size-percentage-bar} {size-used} / {size-total}",
+            "percent": {"type": 3, "green": 30, "yellow": 70},
+            "keyColor": "#aaaaff"
+        },
+        {
+            "type": "custom",
+            "key": "╚════════╩{$5}╝",
+            "keyColor": "#aaaaff",
+        },
+
+
+
+
+        // OPERATING SYSTEM
+        {
+            "type": "custom",
+            "key": "╔════════╦{$5}╗\u001b[41D",
+            "format": "{#cyan} Operating System ",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "os",
+            "key": "║OS      ║{$4}║{$2}",
+            "format": "{name}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "kernel",
+            "key": "║Kernel  ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "bios",
+            "key": "║Bios    ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "packages",
+            "key": "║PM      ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "shell",
+            "key": "║Shell   ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "custom",
+            "key": "╚════════╩{$5}╝",
+            "keyColor": "#aaaaff",
+        },
+
+
+
+        // DESKTOP ENVIRONMENT
+        {
+            "type": "custom",
+            "key": "╔════════╦{$5}╗\u001b[41D",
+            "format": "{#cyan} Desktop Environment ",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "de",
+            "key": "║DE      ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "lm",
+            "key": "║LM      ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "wm",
+            "key": "║WM      ║{$4}║{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "custom",
+            "key": "╚════════╩{$5}╝",
+            "keyColor": "#aaaaff",
+        },
+
+
+
+        // OTHERS
+        {
+            "type": "custom",
+            "key": "┌─────┬{$1}┐",
+            "format": "{#cyan} Time ",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "command",
+            "key": "  OS Age ",
+            "key": "│OS   │{$4}│{$2}",
+            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "uptime",
+            "key": "│Up   │{$4}│{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "datetime",
+            "key": "│Date │{$4}│{$2}",
+            "keyColor": "#aaaaff",
+        },
+        {
+            "type": "custom",
+            "key": "└─────┴{$1}┘",
+            "keyColor": "#aaaaff",
+        },
+    ]
+}
