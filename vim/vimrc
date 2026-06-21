@@ -1,0 +1,64 @@
+" Basic display / UI options
+set number 
+set norelativenumber 
+"set cursorline
+set nowrap
+set scrolloff=50
+set sidescrolloff=10
+
+" Tab / indent settings
+set tabstop=2
+set shiftwidth=4
+set softtabstop=2
+set expandtab
+set smartindent
+set autoindent
+
+" Search / match options
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+set colorcolumn=0
+
+" Matching brackets
+set showmatch
+
+" Command line / popup menu options
+set cmdheight=4
+set showmode
+set pumheight=10
+
+" files
+set nobackup          " do not create a backup file
+set nowritebackup     " do not write to a backup file
+set noswapfile        " do not create a swapfile
+set undofile          " do create an undo file
+let g:undodir = "~/.config/vim/undo"   " adjust as needed (must exist)
+set undodir=%g:undodir
+set viminfo+=n~/.config/vim/viminfo
+
+" Update & timeout settings
+set updatetime=300    " faster completion
+set timeoutlen=500    " timeout duration
+set ttimeoutlen=0     " key code timeout
+
+" Error bells & backspace behavior
+set noerrorbells
+set backspace=indent,eol,start
+
+" Keyword / path options
+set iskeyword+=-
+set path+=**
+
+" Selection mode
+set selection=inclusive
+
+" Mouse & clipboard
+set mouse=a
+set clipboard=unnamedplus
+
+" Custom key mapping
+let mapleader = " "          " use Space as the <Leader>
+nnoremap <silent> <leader>cd :Ex<CR>
