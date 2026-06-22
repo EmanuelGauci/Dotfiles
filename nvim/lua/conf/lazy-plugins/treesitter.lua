@@ -8,14 +8,10 @@ return {
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				-- A list of parser names, or "all"
-				ensure_installed = { 'rust', 'javascript', 'c', 'c_sharp', 'cmake', 'cpp', 'cuda', 'java', 'json', 'latex', 'lua', 'make', 'markdown'},
-                --
-				-- Install parsers synchronously (only applied to `ensure_installed`)
+				ensure_installed = { 'c', 'cpp', 'c_sharp', 'cmake', 'make', 'cuda', 'java', 'json', 'lua',  'markdown'},
 				sync_install = false,
 
-				-- Automatically install missing parsers when entering buffer
-				-- Recommendation: set to false if you don"t have `tree-sitter` CLI installed locally
-				auto_install = true,
+				auto_install = true, -- set to false if tree-sitter CLI not installed locally 
 
 				indent = {
 					enable = true,
@@ -25,13 +21,10 @@ return {
 					-- `false` will disable the whole extension
 					enable = true,
 					disable = function(lang, buf)
-						if lang == "html" then
-							print("disabled")
-							return true
-						end
-
 						local max_filesize = 100 * 1024 -- 100 KB
+
 						local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+
 						if ok and stats and stats.size > max_filesize then
 							vim.notify(
 								"File larger than 100KB treesitter disabled for performance",
@@ -42,15 +35,12 @@ return {
 						end
 					end,
 
-					-- setting this to true will run `:h syntax` and tree-sitter at the same time.
-					-- set this to `true` if you depend on "syntax" being enabled (like for indentation).
-					-- using this option may slow down your editor, and you may see some duplicate highlights.
-					-- instead of true it can also be a list of languages
 					additional_vim_regex_highlighting = { "markdown" },
 				},
 			})
 
 			local treesitter_parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
 			treesitter_parser_config.templ = {
 				install_info = {
 					url = "https://github.com/vrischmann/tree-sitter-templ.git",
@@ -60,6 +50,7 @@ return {
 			}
 
 			vim.treesitter.language.register("templ", "templ")
+
 		end,
 	},
 
@@ -69,7 +60,7 @@ return {
 		config = function()
 			require("treesitter-context").setup({
 				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-				multiwindow = false, -- Enable multiwindow support.
+				multiwindow = true, -- Enable multiwindow support.
 				max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
 				min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 				line_numbers = true,
@@ -85,3 +76,4 @@ return {
 		end,
 	},
 }
+
