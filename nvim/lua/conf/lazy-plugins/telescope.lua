@@ -24,9 +24,16 @@ return {
         require('telescope').load_extension('project')
         vim.keymap.set('n', '<leader>ps', ":lua require 'telescope' .extensions.project.project{}<CR>", {noremap = true, silent = true})
 
+        --<leader>ps = project
+        --<project mode><Ctrl>d = delete project
+        --<project mode><Ctrl>v = rename project
+        --<project mode><Ctrl>a = create project (git root)
+        --<project mode><Ctrl>A = create project (cwd)
+        -- NOTE: REFERENCE https://deepwiki.com/nvim-telescope/telescope-project.nvim/3-usage-guide
 
 
 
         vim.deprecate = function() end
     end
 }
+

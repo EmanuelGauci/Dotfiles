@@ -1,49 +1,55 @@
--- ============================================================================
--- OPTIONS
--- ============================================================================
-vim.opt.number = true -- line number
-vim.opt.relativenumber = false -- relative line numbers
-vim.opt.cursorline = false -- highlight current line
-vim.opt.wrap = true -- do not wrap lines by default
-vim.opt.scrolloff = 0 -- keep 10 lines above/below cursor
-vim.opt.sidescrolloff = 0 -- keep 10 lines to left/right of cursor
+vim.opt.number = true
+vim.opt.relativenumber = false
+vim.opt.cursorline = true -- highlight current line
+vim.opt.wrap = false -- line wrapping 
+vim.opt.scrolloff = 50 -- above/below cursor
+vim.opt.sidescrolloff = 10 -- left/right of cursor
 
+-- tabs
 vim.opt.tabstop = 2 -- tabwidth
 vim.opt.shiftwidth = 4 -- indent width
 vim.opt.softtabstop = 2 -- soft tab stop not tabs on tab/backspace
 vim.opt.expandtab = true -- use spaces instead of tabs
+
+-- indents
 vim.opt.smartindent = true -- smart auto-indent
 vim.opt.autoindent = true -- copy indent from current line
 
+-- Search
 vim.opt.ignorecase = true -- case insensitive search
 vim.opt.smartcase = true -- case sensitive if uppercase in string
 vim.opt.hlsearch = true -- highlight search matches
 vim.opt.incsearch = true -- show matches as you type
 
-vim.opt.signcolumn = "no" -- always show a sign column
-vim.opt.colorcolumn = "0" -- show a column at 100 position chars
+-- columns
+vim.opt.signcolumn = "no"
+vim.opt.colorcolumn = "0"
+
 vim.opt.showmatch = true -- highlights matching brackets
-vim.opt.cmdheight = 4 -- single line command line
 vim.opt.completeopt = "menuone,noinsert,noselect" -- completion options
-vim.opt.showmode = true -- do not show the mode, instead have it in statusline
-vim.opt.pumheight = 10 -- popup menu height
-vim.opt.pumblend = 10 -- popup menu transparency
-vim.opt.winblend = 0 -- floating window transparency
+
+-- modes and menus (visual elements)
+vim.opt.cmdheight = 3
+vim.opt.showmode = true
+vim.opt.pumheight = 10
+vim.opt.pumblend = 10
+vim.opt.winblend = 0
 vim.opt.conceallevel = 0 -- do not hide markup
 vim.opt.concealcursor = "" -- do not hide cursorline in markup
 vim.opt.lazyredraw = true -- do not redraw during macros
 vim.opt.fillchars = { eob = " " } -- hide "~" on empty lines
 
-vim.opt.backup = false -- do not create a backup file
-vim.opt.writebackup = false -- do not write to a backup file
-vim.opt.swapfile = false -- do not create a swapfile
-vim.opt.undofile = true -- do create an undo file
-vim.opt.undodir = undodir -- set the undo directory
-vim.opt.updatetime = 300 -- faster completion
-vim.opt.timeoutlen = 500 -- timeout duration
-vim.opt.ttimeoutlen = 0 -- key code timeout
-vim.opt.autoread = true -- auto-reload changes if outside of neovim
-vim.opt.autowrite = true -- do not auto-save
+-- files and backups
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.undodir = undodir
+vim.opt.updatetime = 300
+vim.opt.timeoutlen = 500
+vim.opt.ttimeoutlen = 0
+vim.opt.autoread = true
+vim.opt.autowrite = true
 
 vim.opt.hidden = true -- allow hidden buffers
 vim.opt.errorbells = false -- no error sounds

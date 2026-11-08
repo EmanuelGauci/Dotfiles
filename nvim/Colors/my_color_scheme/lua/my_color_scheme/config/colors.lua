@@ -3,7 +3,7 @@ local M = {}
 function M.setup()
 
     local palette = {
-        bg_1 = "#0d0b16",
+        bg_1 = "#000000",
         bg_2 = "#221B40",
         fg_1 = "#C2A0F2",
         fg_2 = "#B1B1B1",
