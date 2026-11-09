@@ -9,29 +9,24 @@ return {
     },
 
     config = function()
-        local builtin = require('telescope.builtin')
-        require('telescope').setup({})
+        local telescope = require("telescope")
+        local builtin = require("telescope.builtin")
 
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-        vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-        vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-        vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+        telescope.setup({})
+        telescope.load_extension("project") -- eager load before registering the mapping
 
-        vim.keymap.set('n', '<leader>fs', function()
-            builtin.grep_string({search = vim.fn.input("Grep > ")});
-        end)
+        vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+        vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+        vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+        vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
-        require('telescope').load_extension('project')
-        vim.keymap.set('n', '<leader>ps', ":lua require 'telescope' .extensions.project.project{}<CR>", {noremap = true, silent = true})
+        vim.keymap.set("n", "<leader>fs", function()
+            builtin.grep_string({ search = vim.fn.input("Grep > ") })
+        end, { desc = "Telescope grep string" })
 
-        --<leader>ps = project
-        --<project mode><Ctrl>d = delete project
-        --<project mode><Ctrl>v = rename project
-        --<project mode><Ctrl>a = create project (git root)
-        --<project mode><Ctrl>A = create project (cwd)
-        -- NOTE: REFERENCE https://deepwiki.com/nvim-telescope/telescope-project.nvim/3-usage-guide
-
-
+        vim.keymap.set("n", "<leader>ps", function()
+            telescope.extensions.project.project({})
+        end, { desc = "Telescope projects" })
 
         vim.deprecate = function() end
     end

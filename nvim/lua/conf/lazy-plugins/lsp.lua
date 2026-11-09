@@ -73,10 +73,7 @@ return {
                     })
                 end
 
-                -- The following code creates a keymap to toggle inlay hints in your
-                -- code, if the language server you are using supports them
-                --
-                -- This may be unwanted, since they displace some of your code
+                -- keymap to toggle inlay hints in code if supported (May be unwanted, displace some of the code)
                 if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
                     map('<leader>th', function()
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
@@ -121,25 +118,13 @@ return {
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-        -- Enable the following language servers
-        --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-        --
-        --  Add any additional override configuration in the following tables. Available keys are:
-        --  - cmd (table): Override the default command used to start the server
-        --  - filetypes (table): Override the default list of associated filetypes for the server
-        --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-        --  - settings (table): Override the default settings passed when initializing the server.
-        --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
-
-
-
-------------------------------------
---- MOST IMPORTANT AREA
-------------------------------------
-
+        ------------------------------------
+        --- MOST IMPORTANT AREA
+        ------------------------------------
         local servers = {
             bashls = {},
             marksman = {},
+            lua_ls = {},
 
             clangd = {
                 cmd = { 'clangd' },
@@ -148,7 +133,7 @@ return {
                     '.clangd',
                     'compile_commands.json',
                     '.git',
-                    'CMakeLists.txt.txt',
+                    'CMakeLists.txt',
                 },
             },
 
@@ -183,37 +168,18 @@ return {
                 ---@type lspconfig.settings.omnisharp
                 settings = {
                     FormattingOptions = {
-                        -- Enables support for reading code style, naming convention and analyzer
-                        -- settings from .editorconfig.
-                        EnableEditorConfigSupport = true,
-                        -- Specifies whether 'using' directives should be grouped and sorted during
-                        -- document formatting.
-                        OrganizeImports = nil,
+                        EnableEditorConfigSupport = true, -- Enables support for reading code style, naming convention and analyzer (Settings from .editorconfig)
+                        OrganizeImports = nil, -- Specifies whether 'using' directives should be grouped and sorted during document formatting
                     },
                     MsBuild = {
-                        -- If true, MSBuild project system will only load projects for files that
-                        -- were opened in the editor. This setting is useful for big C# codebases
-                        -- and allows for faster initialization of code navigation features only
-                        -- for projects that are relevant to code that is being edited. With this
-                        -- setting enabled OmniSharp may load fewer projects and may thus display
-                        -- incomplete reference lists for symbols.
+                        -- If true, MSBuild project system will only load projects for files that were opened in the editor (may load fewer projects). 
                         LoadProjectsOnDemand = nil,
                     },
                     RoslynExtensionsOptions = {
-                        -- Enables support for roslyn analyzers, code fixes and rulesets.
-                        EnableAnalyzersSupport = nil,
-                        -- Enables support for showing unimported types and unimported extension
-                        -- methods in completion lists. When committed, the appropriate using
-                        -- directive will be added at the top of the current file. This option can
-                        -- have a negative impact on initial completion responsiveness,
-                        -- particularly for the first few completion sessions after opening a
-                        -- solution.
-                        EnableImportCompletion = nil,
-                        -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
-                        -- true
-                        AnalyzeOpenDocumentsOnly = nil,
-                        -- Enables the possibility to see the code in external nuget dependencies
-                        EnableDecompilationSupport = nil,
+                        EnableAnalyzersSupport = nil, -- Enables support for roslyn analyzers, code fixes and rulesets.
+                        EnableImportCompletion = nil, -- Enables support for showing unimported types and unimported extension methods in completion lists (can have a negative impact on initial completion responsiveness)
+                        AnalyzeOpenDocumentsOnly = nil, -- Only run analyzers against open files when 'enableRoslynAnalyzers' is true
+                        EnableDecompilationSupport = nil, -- Enables the possibility to see the code in external nuget dependencies
                     },
                     RenameOptions = {
                         RenameInComments = nil,
@@ -228,34 +194,11 @@ return {
                 },
             },
 
-            lua_ls = {
-                cmd = { 'lua-language-server' },
-                filetypes = { 'lua' },
-                lua_ls_root_markers1 = {
-                    '.emmyrc.json',
-                    '.luarc.json',
-                    '.luarc.jsonc',
-                },
-                lua_ls_root_markers2 = {
-                    '.luacheckrc',
-                    '.stylua.toml',
-                    'stylua.toml',
-                    'selene.toml',
-                    'selene.yml',
-                },
-                root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers1, root_markers2, { '.git' } }
-                    or vim.list_extend(vim.list_extend(lua_ls_root_markers1, lua_ls_root_markers2), { '.git' }),
-                ---@type lspconfig.settings.lua_ls
-                settings = {
-                    Lua = {
-                        codeLens = { enable = true },
-                        hint = { enable = true, semicolon = 'Disable' },
-                    },
-                },
-            },
         }
 
-        -- can add other tools here that you want Mason to install
+        ------------------------------------
+        --- EXTRAS
+        ------------------------------------
         local ensure_installed = vim.tbl_keys(servers or {})
         vim.list_extend(ensure_installed, {
             'stylua', -- Used to format Lua code
